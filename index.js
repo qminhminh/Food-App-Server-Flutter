@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const CategoryRoute = require('./routes/category');
 const RestaurantRoute = require("./routes/restaurant");
 const FoodRoute = require("./routes/food");
+const RatingRoute = require("./routes/rating");
 dotenv.config();
 
 
@@ -25,6 +26,8 @@ app.use("/api/category", CategoryRoute);
 app.use("/api/restaurant", RestaurantRoute);
 // Food routes
 app.use("/api/foods", FoodRoute);
+// Rating routes
+app.use("/api/rating", RatingRoute);
 
 // Listen to port
 app.listen(process.env.PORT || 3000, () => console.log(`Foodly Backend is running on ${process.env.PORT}!`));
