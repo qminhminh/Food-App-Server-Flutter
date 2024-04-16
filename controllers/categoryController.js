@@ -1,7 +1,7 @@
 const Category = require('../models/Category');
 
 module.exports = {
-    
+    // The category object is created and saved to the database
     createCategory: async (req, res) => {
         const newCategory = new Category(req.body);
         try {
@@ -11,7 +11,8 @@ module.exports = {
             res.status(500).json({ status: false, message: error.message });
         }
     },
-
+    
+    // The getAllCategories function retrieves all categories from the database
     getAllCategories: async (req, res) => {
         try {
             const categories = await Category.find({ title: {$ne: "More"}}, {__v: 0});
@@ -21,7 +22,8 @@ module.exports = {
             res.status(500).json({ status: false, message: error.message });  
         }
     },
-
+    
+    // The getRandomCategories function retrieves random categories from the database
     getRandomCategories: async (req, res) => {
         try {
             let categories = await Category.aggregate([

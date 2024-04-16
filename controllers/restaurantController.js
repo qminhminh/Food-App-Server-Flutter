@@ -34,25 +34,25 @@ module.exports = {
     getRandomRestaurants: async (req, res) => {
         const code = req.params.code;
         try {
-            let randomRestaunt = [];
+            let randomRestaurant = [];
 
             if (code) {
-                randomRestaunt = Restaurant.aggregate([
+                randomRestaurant = await Restaurant.aggregate([
                     { $match: { code: code, isAvailable: true } },
                     { $sample: { size: 5 } },
                     { $project: { __v: 0 } }
                 ]);
             }
 
-            if (randomRestaunt.length === 0) {
-                randomRestaunt = Restaurant.aggregate([
+            if (randomRestaurant.length === 0) {
+                randomRestaurant = await Restaurant.aggregate([
                     { $match: { isAvailable: true } },
                     { $sample: { size: 5 } },
                     { $project: { __v: 0 } }
                 ]);
             }
 
-            res.status(200).json(randomRestaunt);
+            res.status(200).json(randomRestaurant);
         } catch (error) {
             res.status(500).json({ status: false, message: error.message });
         }
@@ -64,14 +64,14 @@ module.exports = {
             let allNearByRestaurants = [];
 
             if (code) {
-                allNearByRestaurants = Restaurant.aggregate([
+                allNearByRestaurants = await Restaurant.aggregate([
                     { $match: { code: code, isAvailable: true } },
                     { $project: { __v: 0 } }
                 ]);
             }
 
             if (allNearByRestaurants.length === 0) {
-                allNearByRestaurants = Restaurant.aggregate([
+                allNearByRestaurants = await Restaurant.aggregate([
                     { $match: { isAvailable: true } },
                     { $project: { __v: 0 } }
                 ]);
