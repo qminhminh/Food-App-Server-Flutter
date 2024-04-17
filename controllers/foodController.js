@@ -92,7 +92,7 @@ getAllFoodsByCode: async(req, res) =>{
             const foods = await Food.aggregate([
                 { $match: { category: category, code: code, isAvailable: true } },
                 { $project: { __v: 0 } }
-            ]);
+            ]);        
 
             if (foods.length === 0) {
                 return res.status(200).json([]);

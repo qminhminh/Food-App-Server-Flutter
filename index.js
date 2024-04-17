@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const cors = require('cors');
 const CategoryRoute = require('./routes/category');
 const RestaurantRoute = require("./routes/restaurant");
 const FoodRoute = require("./routes/food");
@@ -24,6 +25,7 @@ mongoose.connect(process.env.MONGOURL)
 
 // 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
 
