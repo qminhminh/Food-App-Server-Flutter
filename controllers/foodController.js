@@ -46,7 +46,7 @@ module.exports = {
             // If no code provided in params or no Foods match the provided code
             if (!randomFoodList.length) {
                 randomFoodList = await Food.aggregate([
-                    { $sample: { size: 5 } },
+                    { $sample: { size: 3 } },
                     { $project: {  __v: 0 } }
                 ]);
             }
@@ -62,6 +62,17 @@ module.exports = {
         }
     },
 
+getAllFoodsByCode: async(req, res) =>{
+    const code = req.params.code;
+
+    try {
+        const foodList = await Food.find({code: code});
+
+        return res.status(200).json(foodList);
+    } catch (error) {
+        return res.status(500).json({status: false, message:error.message});
+    }
+},
     //Restaurant Menu
     getFoodsByRestaurant: async (req, res) => {
         const id = req.params.id;

@@ -1,9 +1,12 @@
 const router = require('express').Router();
 const foodController = require('../controllers/foodController');
+const {verifyVendor} = require('../middleware/verifyToken');
 
-router.post("/", foodController.addFood);
+router.post("/", verifyVendor, foodController.addFood);
 
 router.get("/recommendation/:code", foodController.getRandomFood);
+
+router.get("/byCode/:code", foodController.getAllFoodsByCode);
 
 router.get("/:id", foodController.getFoodById);
 
