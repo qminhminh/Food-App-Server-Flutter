@@ -13,7 +13,7 @@ async function sendEmail(userEmail, message){
     const mailOptions = {
         from: process.env.AUTH_EMAIL,
         to: userEmail,
-        subject: "Foodly Verification Code",
+        subject: "Food Style Verification Code",
         html: `<h1>Foodly Email Verification</h1>
                <p>Your verification code is:</p>
                <h2 style="color: blue;">${message}</h2>
