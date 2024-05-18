@@ -1,19 +1,33 @@
+const { database } = require('firebase-admin');
 const Restaurant = require('../models/Restaurant');
+const User = require('../models/User');
 
 module.exports = {
 
     addRestaurant: async (req, res) => {
-        const { title, time, imageUrl, owner, code, logoUrl, coords } = req.body;
+        const owner = req.user.id;
+        const { title, time, imageUrl, code, logoUrl, coords } = req.body;
 
         if (!title || !time || !imageUrl || !owner || !code || !logoUrl || !coords
             || !coords.latitude || !coords.longitude || !coords.address || !coords.title) {
             return res.status(400).json({ status: false, message: "You have a missing field" });
         }
+        
+        const existingRestaurants = await Restaurant.findOne({owner: owner});
+        if (existingRestaurants) {
+            return res.status(400).json({ status: false, message: "You already have a restaurant" , data: existingRestaurants});
+        }
+
+        const newRestaurant = new Restaurant(req.body);
 
         try {
-            const newRestaurant = new Restaurant(req.body);
 
             await newRestaurant.save();
+
+            await User.findByIdAndUpdate(owner, 
+                {userType:'Vendor'}, 
+                {new: true, runValidators: true});
+            
             res.status(201).json({ status: true, message: "Restaurant has been successfully" });
         } catch (error) {
             res.status(500).json({ status: false, message: error.message });
