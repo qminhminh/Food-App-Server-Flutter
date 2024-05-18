@@ -5,8 +5,8 @@ const User = require('../models/User');
 module.exports = {
 
     addRestaurant: async (req, res) => {
-        const owner = req.user.id;
-        const { title, time, imageUrl, code, logoUrl, coords } = req.body;
+      
+        const { title, time, imageUrl,owner, code, logoUrl, coords } = req.body;
 
         if (!title || !time || !imageUrl || !owner || !code || !logoUrl || !coords
             || !coords.latitude || !coords.longitude || !coords.address || !coords.title) {
@@ -96,5 +96,19 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ status: false, message: error.message });
         }
-    }
+    },
+
+    getRestaurantByOwner: async(req, res) => {
+        const owner = req.params.id;
+        
+        try{
+            const restaurant = await Restaurant.findOne({owner: owner});
+            if (!restaurant) {
+                return res.status(404).json({ status: false, message: "Restaurant not found" });
+            }
+            res.status(200).json(restaurant);
+        }catch (e) {
+            res.status(500).json({ status: false, message: e.message });
+        }
+    }    
 }

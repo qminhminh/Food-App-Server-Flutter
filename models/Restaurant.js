@@ -23,7 +23,8 @@ const RestaurantSchema = new mongoose.Schema({
         longitudeDelta: {type: Number,  default: 0.0122},
         address: {type: String, required: true},
         title: {type: String, required: true},
-    } 
+    },
+    earnings: {type: Number, default:0.47856}
 });
 
 module.exports = mongoose.model('Restaurant', RestaurantSchema);
