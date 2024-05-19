@@ -12,4 +12,9 @@ router.get("/rest-orders/:id/:status",verifyTokenAndAuthorization, orderControll
 
 router.put("/update/:id",verifyTokenAndAuthorization, orderController.updateOrderStatus);
 
+router.put("/update-payment-status-success/:id",verifyTokenAndAuthorization, orderController.updatePaymentStatusSuccess);
+
+router.put("/update-payment-status-false/:id",verifyTokenAndAuthorization, orderController.updatePaymentStatusSuccess);
+
+
 module.exports = router;

@@ -112,7 +112,49 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ status: false, message: error.message });     
         }
+    },
+
+    updatePaymentStatusSuccess: async (req, res) => {
+        const orderId = req.params.id;
+
+        try{
+            const updatedOrder = await Order.findByIdAndUpdate(
+                orderId,
+                { orderStatus: 'Placed', paymentStatus: 'Completed' }, // Đối tượng cập nhật
+                { new: true } // Tùy chọn để trả về tài liệu đã cập nhật
+            );
+
+            if(updatedOrder){
+                res.status(200).json({status: true, message: "Order updated successfully"})
+            }else{
+                res.status(404).json({status: false, message: "Order not found"})  
+            }
+        }catch(e){
+            res.status(500).json({ status: false, message: error.message });     
+        }
+    },
+
+    updatePaymentStatusFalse: async (req, res) => {
+        const orderId = req.params.id;
+
+        try{
+            const updatedOrder = await Order.findByIdAndUpdate(
+                orderId,
+                { orderStatus: 'Pending', paymentStatus: 'Failed' }, // Đối tượng cập nhật
+                { new: true } // Tùy chọn để trả về tài liệu đã cập nhật
+            );
+
+            if(updatedOrder){
+                res.status(200).json({status: true, message: "Order updated successfully"})
+            }else{
+                res.status(404).json({status: false, message: "Order not found"})  
+            }
+        }catch(e){
+            res.status(500).json({ status: false, message: error.message });     
+        }
     }
+
+
 
 
 }
