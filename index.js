@@ -49,4 +49,4 @@ app.use("/api/cart", CartRoute);
 app.use("/api/orders", OrderRoute);
 
 // Listen to port
-app.listen(process.env.PORT || 3000, () => console.log(`Foodly Backend is running on ${process.env.PORT}!`));
+app.listen(process.env.PORT || 3000,"0.0.0.0", () => console.log(`Foodly Backend is running on ${process.env.PORT}!`));
