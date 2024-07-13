@@ -16,9 +16,10 @@ const OrderRoute = require("./routes/order");
 
 dotenv.config();
 
-
+const PORT = process.env.PORT || 3000;
+const DB_URI = process.env.MONGOURL || 'mongodb+srv://hqminh050503:minh050503@cluster0.jc66hin.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 // Connect to MongoDB
-mongoose.connect(process.env.MONGOURL)
+mongoose.connect(DB_URI)
 .then(() => console.log("Foodly Database Connected"))
 .catch((err) => console.log(err));
 
@@ -49,4 +50,4 @@ app.use("/api/cart", CartRoute);
 app.use("/api/orders", OrderRoute);
 
 // Listen to port
-app.listen(process.env.PORT || 3000,"0.0.0.0", () => console.log(`Foodly Backend is running on ${process.env.PORT}!`));
+app.listen(PORT,"0.0.0.0", () => console.log(`Foodly Backend is running on ${process.env.PORT}!`));
