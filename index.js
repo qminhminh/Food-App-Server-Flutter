@@ -30,6 +30,11 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
 
+// Default route
+app.get('/', (req, res) => {
+    res.send('Welcome to Foodly API');
+  });
+
 // auth routes
 app.use("/", AuthRoute);
 //user routes
