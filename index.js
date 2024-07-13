@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 const CategoryRoute = require('./routes/category');
 const RestaurantRoute = require("./routes/restaurant");
 const FoodRoute = require("./routes/food");
@@ -29,6 +30,9 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
+
+// Serve favicon
+app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Default route
 app.get('/', (req, res) => {
